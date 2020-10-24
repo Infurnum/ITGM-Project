@@ -1,0 +1,298 @@
+                                                                //for the Scanner
+import java.util.*;
+
+
+
+class TicTacToeGame {                                           //setting properties
+  boolean first;
+  char[][]board;
+  int aiScore;
+  int playerScore;
+
+
+                                                                 // constructor
+  TicTacToeGame() {
+    first = false;
+    board = new char[3][3];
+    aiScore = 0;
+    playerScore = 0;
+    
+  }
+}
+                                                
+ void setup()  {
+   size (500,500);
+
+   
+  PImage img1;                                              //called this code in line251 to get board
+    img1 = loadImage("TTTBoard.png");
+  PImage img2;                                              //literly calling this code throughout lines 107-131
+    img2 = loadImage("O-unscreen.gif");
+  PImage img3;                                              //need to call this whenever there are 3 X's in a row
+    img3 = loadImage("line.gif");
+
+    
+  TicTacToeGame g = new TicTacToeGame();
+  Scanner console = new Scanner(System.in);
+ // image(img1, 0, 0);
+  }
+  public void startGame(Scanner console, TicTacToeGame g) {
+                                                            //clears the board to start the game
+  if (g.first == true) {
+    userTurn(console, g);
+  } else {
+    compTurn(console, g);
+  }
+}
+
+                                                                //allows user to play
+public void userTurn(Scanner console, TicTacToeGame g) {
+  System.out.println("Where would you like to play?");
+
+  int r = console.nextInt() - 1;
+  int c = console.nextInt() - 1;
+
+  if (g.board[r][c] == ' ') {
+    g.board[r][c] = 'X';
+
+    if (g.board[0][0] == 'X') {
+      getBoard(g);
+      g.playerScore += 1;
+      checkScoreUser(console, g);
+    } else if (g.board[0][2] == 'X') {
+      getBoard(g);
+      g.playerScore += 3;
+      checkScoreUser(console, g);
+    } else if (g.board[2][0] == 'X') {
+      getBoard(g);
+      g.playerScore += 1000;
+      checkScoreUser(console, g);
+    } else if (g.board[2][2] == 'X') {
+      getBoard(g);
+      g.playerScore += 3000;
+      checkScoreUser(console, g);
+    } else if (g.board[1][1] == 'X') {
+      getBoard(g);
+      g.playerScore += 200;
+      checkScoreUser(console, g);
+    } else if (g.board[0][1] == 'X') {
+      getBoard(g);
+      g.playerScore += 2;
+      checkScoreUser(console, g);
+    } else if (g.board[1][0] == 'X') {
+      getBoard(g);
+      g.playerScore += 100;
+      checkScoreUser(console, g);
+    } else if (g.board[1][2] == 'X') {
+      getBoard(g);
+      g.playerScore += 300;
+      checkScoreUser(console, g);
+    } else if (g.board[2][1] == 'X') {
+      getBoard(g);
+      g.playerScore += 2000;
+      checkScoreUser(console, g);
+    }
+  } else if (g.board[r][c] == 'X' ||g.board[r][c] == 'O') {
+    g.first = true;
+    System.out.println("Please choose an empty space");
+    startGame(console, g);
+  }
+
+  System.out.println("Tic Tac Toe Game");
+}
+
+void mousePressed() {
+  if (mousePressed && (mouseButton == LEFT) && (210 < mouseX) && (336 > mouseX) && (163 < mouseY) && (288 > mouseY)) {
+    draw()
+    image(img2, 273, 225.5);                                                                                                  //middle
+  } else if (else if (mousePressed && (mouseButton == LEFT) && (70 < mouseX) && (199 > mouseX) && (25 < mouseY) && (152 > mouseY)) {
+    draw()
+    image(img2, 134.5, 88.5);                                                                                              //Top Left
+    } else if (mousePressed && (mouseButton == LEFT) && (210 < mouseX) && (336 > mouseX) && (25 < mouseY) && (152 > mouseY)) {
+    draw()
+    image(img2, 273, 88.5);                                                                                           //Top Middle
+  } else if (mousePressed && (mouseButton == LEFT) && (346 < mouseX) && (479 > mouseX) && (25 < mouseY) && (152 > mouseY)) {
+    draw()
+    image(img2, 412.5, 88.5);                                                                                            //Top Right
+  } else if (mousePressed && (mouseButton == LEFT) && (70 < mouseX) && (199 > mouseX) && (163 < mouseY) && (288 > mouseY)) {
+    draw()
+    image(img2, 134.5, 225.5);                                                                                          //Middle Left
+  } else if (mousePressed && (mouseButton == LEFT) && (346 < mouseX) && (479 > mouseX) && (163 < mouseY) && (288 > mouseY)) {
+      draw() 
+    image(img2, 412.5, 225.5);                                                                                        //Middle Right
+  } else if (mousePressed && (mouseButton == LEFT) && (70 < mouseX) && (199 > mouseX) && (310 < mouseY) && (430 > mouseY)) {
+    draw()
+    image(img2, 134.5, 370);                                                                                      //Bottom Right
+  } else if (mousePressed && (mouseButton == LEFT) && (210 < mouseX) && (336 > mouseX) && (310 < mouseY) && (430 > mouseY)) {
+    draw()
+    image(img2, 273, 370);                                                                                        //Bottom Middle
+  } else if (mousePressed && (mouseButton == LEFT) && (346 < mouseX) && (479 > mouseX) && (310 < mouseY) && (430 > mouseY)) {
+    draw()
+    image(img2, 412.5, 370);                                                                                      //Bottom Left
+  }  
+}    
+
+
+
+//allows computer to play
+public void compTurn(Scanner console, TicTacToeGame g) {
+
+  System.out.println("Now it's my turn");
+  System.out.println("");
+
+  if (g.board[0][0] == ' ') {
+    g.board[0][0] = 'O';
+    getBoard(g);
+    userTurn(console, g);
+    g.aiScore += 1;
+  } else if (g.board[0][2] == ' ') {
+    g.board[0][2] = 'O';
+    getBoard(g);
+    userTurn(console, g);
+    g.aiScore += 3;
+  } else if (g.board[2][0] == ' ') {
+    g.board[2][0] = 'O';
+    getBoard(g);
+    userTurn(console, g);
+    g.aiScore += 1000;
+  } else if (g.board[2][2] == ' ') {
+    g.board[2][2] = 'O';
+    getBoard(g);
+    userTurn(console, g);
+    g.aiScore += 3000;
+  } else if (g.board[1][1] == ' ') {
+    g.board[1][1] = 'O';
+    getBoard(g);
+    userTurn(console, g);
+    g.aiScore += 200;
+  } else if (g.board[0][1] == ' ') {
+    g.board[0][1] = 'O';
+    getBoard(g);
+    userTurn(console, g);
+    g.aiScore += 2;
+  } else if (g.board[1][0] == ' ') {
+    g.board[1][0] = 'O';
+    getBoard(g);
+    userTurn(console, g);
+    g.aiScore += 100;
+  } else if (g.board[1][2] == ' ') {
+    g.board[1][2] = 'O';
+    getBoard(g);
+    userTurn(console, g);
+    g.aiScore += 300;
+  } else if (g.board[2][1] == ' ') {
+    g.board[2][1] = 'O';
+    getBoard(g);
+    userTurn(console, g);
+    g.aiScore += 2000;
+  }
+}
+
+//score checkers
+public void checkScoreUser(Scanner console, TicTacToeGame g) {
+  if (g.aiScore == 3201 || g.aiScore == 1203 || g.aiScore == 6 ||
+    g.aiScore == 600 || g.aiScore == 6000 || g.aiScore == 1101 || 
+    g.aiScore == 2202 || g.aiScore == 3303) {
+    System.out.println("I win!!! Hahahahahaha!!!!!!");
+draw();
+  } else if (g.playerScore == 3201 || g.playerScore == 1203 || g.playerScore == 6 ||
+    g.playerScore == 600 || g.playerScore == 6000 || g.playerScore == 1101 || 
+    g.playerScore == 2202 || g.playerScore == 3303) {
+    System.out.println("You won!");
+draw();
+  } else {
+    compTurn(console, g);
+  }
+}
+
+public void checkScoreComp(Scanner console, TicTacToeGame g) {
+  if (g.aiScore == 3201 || g.aiScore == 1203 || g.aiScore == 6 ||
+    g.aiScore == 600 || g.aiScore == 6000 || g.aiScore == 1101 || 
+    g.aiScore == 2202 || g.aiScore == 3303) {
+    System.out.println("I win!!! Hahahahahaha!!!!!!");
+draw();
+  } else if (g.playerScore == 3201 || g.playerScore == 1203 || g.playerScore == 6 ||
+    g.playerScore == 600 || g.playerScore == 6000 || g.playerScore == 1101 || 
+    g.playerScore == 2202 || g.playerScore == 3303) {
+    System.out.println("You won!");
+draw();
+  } else {
+    userTurn(console, g);
+  }
+}
+//board stuff
+
+//initializes board and fills it with black spaces
+public void initializeBoard(TicTacToeGame g) {
+  for (int r = 0; r < 3; r++) {
+    for (int c = 0; c < 3; c++) {
+      g.board[r][c] = ' ';
+    }
+  }
+}
+ 
+void draw();
+
+//prints the actual board out
+public void getBoard(TicTacToeGame g) {
+  String bar = "  =============";
+  System.out.println("    1   2   3");
+  System.out.println(bar);
+  System.out.println("1   " +g.board[0][0] + " | " +g.board[0][1] + " | " +g.board[0][2]);
+  System.out.println(bar);
+  System.out.println("2   " +g.board[1][0] + " | " +g.board[1][1] + " | " +g.board[1][2]);
+  System.out.println(bar);
+  System.out.println("3   " +g.board[2][0] + " | " +g.board[2][1] + " | " +g.board[2][2]);
+  System.out.println(bar);
+  System.out.println("");
+}
+
+public void getBoard(TicTacToeGame g) {
+    image(img1, 0, 0);
+ //  if (img2 //if img2 is on (xcord,ycord) then set g.board[0][0] to X and set score
+ //   if (img3 //if img3 is on (Xcord,ycord) then set g.board[0][1] to X and set score 
+}
+ 
+ public void draw() {                                            //starting game instance
+
+  System.out.println();
+  System.out.println();
+  System.out.println("");
+  System.out.println("Would you like to go first?");
+  String goFirst = console.nextLine()
+}
+
+
+
+
+
+
+
+
+
+void keyPressed() {                                          //try 4
+  
+  if(key == 'y') {
+    
+    set(g.first = true);                                    //^
+    print(g.first);
+}
+  }
+  
+  
+//  initializeBoard(g); {                                   //starting setting up board and game
+//  getBoard(g);
+//  startGame(console, g);
+//}
+
+
+
+
+
+//need to get done worksheet
+
+//if mouse button clicked then place X.png on selected area   -------Done
+//scan for x.png on board
+//set score for each O.png or X.png
+//set board.png as background                                -------Done
+//set user input as key functions
